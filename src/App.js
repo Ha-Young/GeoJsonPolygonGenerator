@@ -50,8 +50,15 @@ function App() {
     setLevel(level);
   }
 
-  function handleZoomChange(level) {
-    setLevel(level);
+  function onResultTextChange(resultText) {
+    try {
+      const jsonObj = JSON.parse(resultText);
+
+      console.log(jsonObj);
+    } catch (err) {
+      console.log(err);
+      setAreas([...areas]);
+    }
   }
 
   return (
@@ -62,7 +69,7 @@ function App() {
         polygonExtractMode={polygonExtractMode}
         onGeoJsonPolygonAdd={handleGeoJsonPolygonAdd}
         onCenterChange={handleCenterChange}
-        onZoomChange={handleZoomChange}
+        areas={areas}
       />
       <AreaNameInput
         areaName={areaName}
@@ -72,6 +79,7 @@ function App() {
       />
       <ResultTextArea
         resultText={areasJsonString}
+        onResultTextChange={onResultTextChange}
       />
     </div>
   );

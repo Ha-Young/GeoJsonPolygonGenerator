@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import "./index.css";
 
-export default function ResultTextArea({ resultText }) {
+export default function ResultTextArea({ resultText, onResultTextChange }) {
   const [text, setText] = useState(resultText);
 
   useEffect(() => {
-    console.log("setText changed");
     setText(resultText);
   }, [resultText])
 
   function handleTextChange(e) {
     setText(e.target.value);
+    onResultTextChange(e.target.value);
   }
 
   function handleCopyBtnClick() {

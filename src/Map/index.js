@@ -1,5 +1,5 @@
 /*global kakao*/
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import "./index.css";
 
@@ -9,12 +9,14 @@ const POLYGON_COLOR = "#f55c47";
 function Map({
   center,
   level,
+  areas,
   onGeoJsonPolygonAdd,
   polygonExtractMode,
   onCenterChange,
-  onZoomChange,
 }) {
   const [map, setMap] = useState(null);
+  const makedPolygonsRef = useRef([]);
+
   useEffect(() => {
     const script = document.createElement("script");
     script.async = true;
@@ -162,7 +164,6 @@ function Map({
     }
 
     if (map) {
-      console.log("addListener");
       kakao.maps.event.addListener(map, "dblclick", handleDblClick);
       kakao.maps.event.addListener(map, "click", handleClick);
       kakao.maps.event.addListener(map, "mousemove", handleMouseMove);
@@ -171,16 +172,74 @@ function Map({
 
     return () => {
       if (map) {
-        console.log("removeListener");
         kakao.maps.event.removeListener(map, "dblclick", handleDblClick);
         kakao.maps.event.removeListener(map, "click", handleClick);
         kakao.maps.event.removeListener(map, "mousemove", handleMouseMove);
         kakao.maps.event.removeListener(map, "rightclick", handleRightClick);
       }
+    };
+  }, [map, onCenterChange, onGeoJsonPolygonAdd, polygonExtractMode]);
+
+  useEffect(() => {
+    if (map && areas && areas.length > 0) {
+      clearMakedPolygons();
+
+      for (var i = 0, len = areas.length; i < len; i++) {
+        const polygon = displayArea(areas[i]);
+
+        makedPolygonsRef.current.push(polygon);
+      }
     }
-  }, [map, onCenterChange, onGeoJsonPolygonAdd, onZoomChange, polygonExtractMode]);
+  }, [areas, map]);
+
+  function clearMakedPolygons() {
+    makedPolygonsRef.current.forEach((polygon) => polygon.setMap(null));
+    makedPolygonsRef.current = [];
+  }
+
+  function displayArea(area) {
+    let customOverlay = new kakao.maps.CustomOverlay({});;
+
+    const path = area.location.coordinates[0].map(
+      (coordinate) => new kakao.maps.LatLng(coordinate[0], coordinate[1])
+    );
+
+    const polygon = new kakao.maps.Polygon({
+      map: map,
+      path: path,
+      strokeWeight: 2,
+      strokeColor: POLYGON_COLOR,
+      strokeOpacity: 0.8,
+      fillColor: "#fff",
+      fillOpacity: 0.7,
+    });
+
+    kakao.maps.event.addListener(polygon, "mouseover", function (mouseEvent) {
+      polygon.setOptions({ fillColor: POLYGON_COLOR });
+
+      customOverlay.setContent('<div class="area-overay">' + area.name + "</div>");
+
+      customOverlay.setPosition(mouseEvent.latLng);
+      customOverlay.setMap(map);
+    });
+
+    kakao.maps.event.addListener(polygon, "mousemove", function (mouseEvent) {
+      customOverlay.setPosition(mouseEvent.latLng);
+    });
+
+    kakao.maps.event.addListener(polygon, "mouseout", function () {
+      polygon.setOptions({ fillColor: "#fff" });
+      customOverlay.setMap(null);
+    });
+
+    return polygon;
+  }
 
   return <div id="map" className="map"></div>;
 }
 
 export default React.memo(Map);
+
+function getDistancePosition(kakaoLatLng, distance) {
+  return new kakao.maps.LatLng(kakaoLatLng.getLat() - distance, kakaoLatLng.getLng() - distance);
+}
