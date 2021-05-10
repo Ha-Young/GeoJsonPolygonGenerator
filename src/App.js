@@ -54,7 +54,7 @@ function App() {
     try {
       const jsonObj = JSON.parse(resultText);
 
-      console.log(jsonObj);
+      setAreas(jsonObj);
     } catch (err) {
       console.log(err);
       setAreas([...areas]);
