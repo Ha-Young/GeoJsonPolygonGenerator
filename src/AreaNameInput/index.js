@@ -14,7 +14,7 @@ export default function AreaNameInput({
       <input name="areaName" value={areaName} onChange={onAreaNameChange} />
       <button onClick={onGetPolygonBtnClick}>{polygonExtractMode ? "추출 종료하기" : "추출 하기"}</button>
     </div>
-    <Information />
+    {polygonExtractMode && <Information />}
     </>
   );
 }

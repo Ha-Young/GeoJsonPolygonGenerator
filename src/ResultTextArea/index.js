@@ -1,8 +1,6 @@
 import "./index.css";
 
 export default function ResultTextArea({ resultText }) {
-  console.log("rerender", resultText);
-
   function handleTextChange(e) {
     e.preventDefault();
   }

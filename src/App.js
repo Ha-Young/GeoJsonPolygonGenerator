@@ -38,7 +38,8 @@ function App() {
     setCenter([center.getLat(), center.getLng()]);
     setLevel(level);
     setAreaName("");
-  }, [areaName, areas]);
+    setPolygonExtractMode(!polygonExtractMode);
+  }, [areaName, areas, polygonExtractMode]);
 
   function handleGetPolygonBtnClick() {
     setPolygonExtractMode(!polygonExtractMode);
