@@ -1,0 +1,12 @@
+.informationWrapper {
+  position: fixed;
+  top: 60px;
+  left: 0px;
+  padding: 5px;
+  background-color: rgba(250, 215, 215, 0.767);
+  z-index: 1;
+}
+
+.informationWrapper p {
+  margin: 0;
+}

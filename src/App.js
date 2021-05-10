@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AreaNameInput from "./AreaNameInput";
+import Information from "./Information";
 import Map from "./Map";
 
 function App() {
@@ -33,12 +34,6 @@ function App() {
         polygonExtractMode={polygonExtractMode}
         onGetPolygonBtnClick={handleGetPolygonBtnClick}
       />
-
-      <div>
-        <p>
-          <em>지도를 마우스로 클릭하면 다각형 그리기가 시작되고 <br/>오른쪽 마우스를 클릭하면 다각형 그리기가 종료됩니다</em>
-        </p>
-      </div>
     </div>
   );
 }
