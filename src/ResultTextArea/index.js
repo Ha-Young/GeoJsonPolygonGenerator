@@ -24,10 +24,21 @@ export default function ResultTextArea({ resultText, onResultTextChange }) {
     );
   }
 
+  function handleChangeLatLngBtnClick() {
+    const areas = JSON.parse(resultText);
+
+    for (const area of areas) {
+      area.location.coordinates[0] = area.location.coordinates[0].map((latLng) => [latLng[1], latLng[0]]);
+    }
+
+    setText(JSON.stringify(areas, null, 4));
+  }
+
   return (
     <div className="resultTextAreaWrapper">
       <textarea value={text} onChange={handleTextChange}></textarea>
       <button className="copyBtn" onClick={handleCopyBtnClick}>copy</button>
+      <button onClick={handleChangeLatLngBtnClick}>changeLatLng</button>
     </div>
   );
 }

@@ -146,12 +146,13 @@ function Map({
           shp.coordinates = [[]];
 
           for (const i in path) {
-            const lng = path[i].getLat();
-            const lat = path[i].getLng();
+            const lat = path[i].getLat();
+            const lng = path[i].getLng();
             shp.coordinates[0].push([lng, lat]);
           }
-          const lng = path[0].getLat();
-          const lat = path[0].getLng();
+
+          const lat = path[0].getLat();
+          const lng = path[0].getLng();
           shp.coordinates[0].push([lng, lat]);
 
           onGeoJsonPolygonAdd(shp, map.getCenter(), map.getLevel());
@@ -201,7 +202,7 @@ function Map({
     let customOverlay = new kakao.maps.CustomOverlay({});;
 
     const path = area.location.coordinates[0].map(
-      (coordinate) => new kakao.maps.LatLng(coordinate[0], coordinate[1])
+      (coordinate) => new kakao.maps.LatLng(coordinate[1], coordinate[0])
     );
 
     const polygon = new kakao.maps.Polygon({
