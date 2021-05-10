@@ -1,0 +1,12 @@
+.areaNameInputWrapper {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  padding: 20px;
+  background-color: rgba(250, 235, 215, 0.767);
+  z-index: 1;
+}
+
+.areaNameInputWrapper label {
+  margin-right: 10px;
+}
