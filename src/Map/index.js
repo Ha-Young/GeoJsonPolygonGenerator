@@ -4,11 +4,14 @@ import React, { useEffect } from "react";
 import "./index.css";
 
 const MAP_API_KEY = process.env.REACT_APP_KAKAO_MAP_API_KEY;
-const INITIAL_LAT = 37.558309;
-const INITIAL_LNG = 126.925776;
 
-export default function Map({
+function Map({
+  center,
+  level,
   onGeoJsonPolygonAdd,
+  polygonExtractMode,
+  onCenterChange,
+  onZoomChange,
 }) {
   useEffect(() => {
     const script = document.createElement("script");
@@ -20,35 +23,63 @@ export default function Map({
       kakao.maps.load(() => {
         const container = document.getElementById("map");
         const options = {
-          center: new kakao.maps.LatLng(INITIAL_LAT, INITIAL_LNG),
-          level: 7,
+          center: new kakao.maps.LatLng(center[0], center[1]),
+          level,
         };
 
         const map = new window.kakao.maps.Map(container, options);
 
-        addMapEvents(map, onGeoJsonPolygonAdd);
+        addMapEvents(
+          map,
+          onGeoJsonPolygonAdd,
+          polygonExtractMode,
+          onCenterChange,
+          onZoomChange
+        );
       });
     };
-  }, [onGeoJsonPolygonAdd]);
+  }, [center, level, onCenterChange, onGeoJsonPolygonAdd, onZoomChange, polygonExtractMode]);
 
   return <div id="map" className="map"></div>;
 }
 
-function addMapEvents(map, onGeoJsonPolygonAdd) {
+export default React.memo(Map);
+
+function addMapEvents(
+  map,
+  onGeoJsonPolygonAdd,
+  polygonExtractMode,
+  onCenterChange,
+  onZoomChange
+) {
   let drawingFlag = false; // 다각형이 그려지고 있는 상태를 가지고 있을 변수입니다
   let drawingPolygon; // 그려지고 있는 다각형을 표시할 다각형 객체입니다
   let polygon; // 그리기가 종료됐을 때 지도에 표시할 다각형 객체입니다
   let areaOverlay; // 다각형의 면적정보를 표시할 커스텀오버레이 입니다
-  let infowindow = new kakao.maps.InfoWindow({ removable: true });
 
-  // 마우스 클릭 이벤트가 발생하고나면 drawingFlag가 그려지고 있는 상태인 ture 값으로 바뀝니다
-  // 그려지고 있는 상태인 경우 drawingPolygon 으로 그려지고 있는 다각형을 지도에 표시합니다
-  // 마우스 오른쪽 클릭 이벤트가 발생하면 drawingFlag가 그리기가 종료된 상태인 false 값으로 바뀌고
-  // polygon 으로 다 그려진 다각형을 지도에 표시합니다
+  kakao.maps.event.addListener(map, 'dblclick', function(mouseEvent) {
+    const latlng = mouseEvent.latLng;
+    const level = map.getLevel();
 
-  // 지도에 마우스 클릭 이벤트를 등록합니다
-  // 지도를 클릭하면 다각형 그리기가 시작됩니다 그려진 다각형이 있으면 지우고 다시 그립니다
+    onCenterChange({ lat: latlng.getLat(), lng: latlng.getLng(), level });
+  });
+
+  kakao.maps.event.addListener(map, "dragend", function () {
+    const latlng = map.getCenter();
+    const level = map.getLevel();
+
+    onCenterChange({ lat: latlng.getLat(), lng: latlng.getLng(), level });
+  });
+
+  kakao.maps.event.addListener(map, "zoom_changed", function () {
+    onZoomChange(map.getLevel());
+  });
+
   kakao.maps.event.addListener(map, "click", function (mouseEvent) {
+    if (!polygonExtractMode) {
+      return;
+    }
+
     // 마우스로 클릭한 위치입니다
     var clickPosition = mouseEvent.latLng;
 
@@ -186,7 +217,8 @@ function addMapEvents(map, onGeoJsonPolygonAdd) {
 
         // document.getElementById("geop").innerHTML = JSON.stringify(shp);
         console.log(shp);
-        onGeoJsonPolygonAdd(shp);
+        console.log("map.getLevel()", map.getLevel());
+        onGeoJsonPolygonAdd(shp, map.getCenter(), map.getLevel());
       } else {
         // 다각형을 구성하는 좌표가 2개 이하이면 다각형을 지도에 표시하지 않습니다
         polygon = null;
