@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 
 const MAP_API_KEY = process.env.REACT_APP_KAKAO_MAP_API_KEY;
+const POLYGON_COLOR = "#f55c47";
 
 function Map({
   center,
@@ -72,20 +73,20 @@ function Map({
           map: map,
           path: [clickPosition],
           strokeWeight: 3,
-          strokeColor: "#00a0e9",
+          strokeColor: POLYGON_COLOR,
           strokeOpacity: 1,
           strokeStyle: "solid",
-          fillColor: "#00a0e9",
+          fillColor: POLYGON_COLOR,
           fillOpacity: 0.2,
         });
 
         polygon = new kakao.maps.Polygon({
           path: [clickPosition],
           strokeWeight: 3,
-          strokeColor: "#00a0e9",
+          strokeColor: POLYGON_COLOR,
           strokeOpacity: 1,
           strokeStyle: "solid",
-          fillColor: "#00a0e9",
+          fillColor: POLYGON_COLOR,
           fillOpacity: 0.2,
         });
       } else {

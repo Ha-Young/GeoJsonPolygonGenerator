@@ -1,8 +1,16 @@
+import { useEffect, useState } from "react";
 import "./index.css";
 
 export default function ResultTextArea({ resultText }) {
+  const [text, setText] = useState(resultText);
+
+  useEffect(() => {
+    console.log("setText changed");
+    setText(resultText);
+  }, [resultText])
+
   function handleTextChange(e) {
-    e.preventDefault();
+    setText(e.target.value);
   }
 
   function handleCopyBtnClick() {
@@ -18,7 +26,7 @@ export default function ResultTextArea({ resultText }) {
 
   return (
     <div className="resultTextAreaWrapper">
-      <textarea value={resultText} onChange={handleTextChange}></textarea>
+      <textarea value={text} onChange={handleTextChange}></textarea>
       <button className="copyBtn" onClick={handleCopyBtnClick}>copy</button>
     </div>
   );
