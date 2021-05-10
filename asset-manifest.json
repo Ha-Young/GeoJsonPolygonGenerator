@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/GeoJsonPolygonGenerator/static/css/main.6372394c.chunk.css",
+    "main.js": "/GeoJsonPolygonGenerator/static/js/main.46702034.chunk.js",
+    "main.js.map": "/GeoJsonPolygonGenerator/static/js/main.46702034.chunk.js.map",
+    "runtime-main.js": "/GeoJsonPolygonGenerator/static/js/runtime-main.15cec8b3.js",
+    "runtime-main.js.map": "/GeoJsonPolygonGenerator/static/js/runtime-main.15cec8b3.js.map",
+    "static/js/2.a6b3ca93.chunk.js": "/GeoJsonPolygonGenerator/static/js/2.a6b3ca93.chunk.js",
+    "static/js/2.a6b3ca93.chunk.js.map": "/GeoJsonPolygonGenerator/static/js/2.a6b3ca93.chunk.js.map",
+    "index.html": "/GeoJsonPolygonGenerator/index.html",
+    "static/css/main.6372394c.chunk.css.map": "/GeoJsonPolygonGenerator/static/css/main.6372394c.chunk.css.map",
+    "static/js/2.a6b3ca93.chunk.js.LICENSE.txt": "/GeoJsonPolygonGenerator/static/js/2.a6b3ca93.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.15cec8b3.js",
+    "static/js/2.a6b3ca93.chunk.js",
+    "static/css/main.6372394c.chunk.css",
+    "static/js/main.46702034.chunk.js"
+  ]
+}
