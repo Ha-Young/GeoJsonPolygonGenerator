@@ -100,26 +100,26 @@ Array<MyGeoJSON_Polygon>
 
 1. **화면**
 
-![메인페이지](./README_ASSET/mainpage.png)
+<img src="./README_ASSET/mainpage.png" alt="메인페이지" style="border: 1px solid black;width:850%" />
 
 2. **추가하기**
 
    1. 좌측 상단 추가할 장소 이름 입력
 
-      ![추가할 장소 이름 입력](./README_ASSET/inputAreaName.png)
+      <img src="./README_ASSET/inputAreaName.png" alt="추가할 장소 이름 입력" style="border: 1px solid black;width:70%" />
 
    2. 추출하기 클릭
 
-      ![추출하기클릭](./README_ASSET/clickExtractBtn.png)
+      <img src="./README_ASSET/clickExtractBtn.png" alt="추출하기클릭" style="border: 1px solid black;width:70%" />
 
    3. 지도에 마우스 클릭하여 원하는 지역에 Polygon을 그린 후 오른쪽 마우스 클릭
 
-      ![polygon 그리기](./README_ASSET/drawPolygon.png)
+      <img src="./README_ASSET/drawPolygon.png" alt="polygon 그리기" style="border: 1px solid black;width:70%" />
 
 3. **데이터 복사**
 
    1. 아래 생성된 GeoJSON 데이터 형태 (배열) 복사하여 사용
 
-   ![copy data](./README_ASSET/copyGeoJSONPolygon.png)
+   <img src="./README_ASSET/copyGeoJSONPolygon.png" alt="copy data" style="border: 1px solid black" />
 
    
